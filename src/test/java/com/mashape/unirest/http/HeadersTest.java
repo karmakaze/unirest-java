@@ -13,13 +13,14 @@ public class HeadersTest {
 	@Before
 	public void setUp() {
 		headers = new Headers();
+		headers.put("Content-Type", Arrays.asList("application/json"));
 	}
 
 	@Test
-	public void headerNamesCaseInsensitive() {
-		headers.put("content-type", Arrays.asList("application/json"));
+	public void testHeaderNamesCaseSensitive() {
 
-		String value = headers.getFirst("cOnTeNt-TyPe");
-		assertEquals("", "application/json", value);
+		assertEquals("Only header \"Content-Type\" should exist", null, headers.getFirst("cOnTeNt-TyPe"));
+		assertEquals("Only header \"Content-Type\" should exist", null, headers.getFirst("content-type"));
+		assertEquals("Only header \"Content-Type\" should exist", "application/json", headers.getFirst("Content-Type"));
 	}
 }
